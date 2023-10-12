@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 const apiUrl = "https://4196413129.for-seoul.synctreengine.com/syncathon3";
 const authToken = "jI12jJhnjJia6tikiLcomhnmhnmhnmhnmhnmaxamEzmz";
 let data;
