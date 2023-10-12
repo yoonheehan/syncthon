@@ -4,10 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function InputForm() {
-  const [ifsmoke, setIfSmoke] = useState("");
-  useEffect(() => {
-    setIfSmoke("1");
-  }, []);
+  const [ifsmoke, setIfSmoke] = useState("1");
+
   let ageArray = Array(90)
     .fill(0)
     .map((v, i) => i + 10);
@@ -35,7 +33,7 @@ export default function InputForm() {
 
   return (
     <>
-      <form className="border border-solid px-5 py-10 rounded-2xl border-black min-w-[600px]">
+      <form className="border border-solid px-5 py-10 rounded-2xl border-black min-w-[600px] bg-white">
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -97,7 +95,7 @@ export default function InputForm() {
                       value="0"
                       name="ifsmoke"
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
-                      checked={ifsmoke === "0"}
+                      checked={ifsmoke == "0"}
                       onChange={setSmoke}
                     />
                     <label
@@ -107,13 +105,14 @@ export default function InputForm() {
                       흡연
                     </label>
                   </div>
+
                   <div className="flex items-center">
                     <input
                       id="no-smoke"
                       type="radio"
                       value="1"
                       name="ifsmoke"
-                      checked={ifsmoke === "1"}
+                      checked={ifsmoke == "1"}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
                       onChange={setSmoke}
                     />
@@ -127,51 +126,53 @@ export default function InputForm() {
                 </div>
               </div>
 
-              <div className="mt-5">
-                <div className="mb-3">흡연 기간 및 하루 당 개피</div>
-                <div className="flex space-x-5">
-                  <div>
-                    <label
-                      htmlFor="many"
-                      className="block text-sm font-medium text-gray-900"
-                    >
-                      하루당 피는 개수
-                    </label>
-                    <div className="">
-                      <select
-                        id="many"
-                        className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block p-2.5 min-w-[100px]"
+              {ifsmoke === "0" && (
+                <div className="mt-5">
+                  <div className="mb-3">흡연 기간 및 하루 당 개피</div>
+                  <div className="flex space-x-5">
+                    <div>
+                      <label
+                        htmlFor="many"
+                        className="block text-sm font-medium text-gray-900"
                       >
-                        {Object.entries(manyObject).map(([key, value]) => (
-                          <option key={key} value={value}>
-                            {key}
-                          </option>
-                        ))}
-                      </select>
+                        하루당 피는 개수
+                      </label>
+                      <div className="">
+                        <select
+                          id="many"
+                          className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block p-2.5 min-w-[100px]"
+                        >
+                          {Object.entries(manyObject).map(([key, value]) => (
+                            <option key={key} value={value}>
+                              {key}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="long"
-                      className="block text-sm font-medium text-gray-900"
-                    >
-                      흡연 기간
-                    </label>
-                    <div className="">
-                      <select
-                        id="long"
-                        className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block p-2.5 min-w-[100px]"
+                    <div>
+                      <label
+                        htmlFor="long"
+                        className="block text-sm font-medium text-gray-900"
                       >
-                        {Object.entries(howMuchSmoke).map(([key, value]) => (
-                          <option key={key} value={value}>
-                            {key}
-                          </option>
-                        ))}
-                      </select>
+                        흡연 기간
+                      </label>
+                      <div className="">
+                        <select
+                          id="long"
+                          className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block p-2.5 min-w-[100px]"
+                        >
+                          {Object.entries(howMuchSmoke).map(([key, value]) => (
+                            <option key={key} value={value}>
+                              {key}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               <div className="mt-5">
                 <label
