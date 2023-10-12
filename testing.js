@@ -1,17 +1,12 @@
-```
-길이가 너무 길어 교보생명 json 중요한 데이터만 추출
-```;
 const apiUrl = "https://4196413129.for-seoul.synctreengine.com/syncathon3";
 const authToken = "jI12jJhnjJia6tikiLcomhnmhnmhnmhnmhnmaxamEzmz";
 let data;
-
 const requestOptions = {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
   },
 };
-
 fetch(apiUrl, requestOptions)
   .then((response) => response.json())
   .then((responseData) => {
@@ -38,36 +33,23 @@ fetch(apiUrl, requestOptions)
       }
       return acc;
     }, []);
-
-    // const extractedData = data.map((item) => ({
-    //   cpnyNm: item.cpnyNm,
-    //   kcisGoodNm: item.kcisGoodNm,
-    //   etncYmd: item.etncYmd,
-    //   pmtcyclnm: item.pmtCyclNm,
-    //   pmtpd: item.pmtpd,
-    //   kcisEnsPvsNm: item.kcisEnsPvsNm,
-    //   cpnyEnsPvsNm: item.cpnyEnsPvsNm,
-    // }));
-    // console.log(data);
-    console.log(groupedData);
-    // console.log(extractedData);
-
-    console.log(
-      responseData.result.response.body.goodList_cnt[0]["goodList_cnt"]
-    );
+    // console.log(groupedData);
+    console.log(groupedData[0]);
+    let resultString;
+    // let insuranceData = groupedData;
+    for (let i = 0; i < groupedData.length; i++) {
+      let insuranceArray = groupedData[i];
+      let kcisList = insuranceArray.kcisEnsPvsNm;
+      let kcisEnsPvsNmString = JSON.stringify(kcisList).replace(/"/g, "'");
+      let s =
+        `${i + 1}번째 보험 회사명: ${insuranceArray.cpnyNm}` +
+        `상품명: ${insuranceArray.kcisGoodNm}` +
+        ": 보험 보장 목록:" +
+        kcisEnsPvsNmString;
+      resultString += s;
+    }
+    console.log(resultString);
   })
   .catch((error) => {
     console.error("Error:", error);
   });
-
-// const extractedData = data.map((item) => ({
-//   cpnyNm: item.cpnyNm,
-//   kcisGoodNm: item.kcisGoodNm,
-//   etncYmd: item.etncYmd,
-//   pmtcyclnm: item.pmtCyclNm,
-//   pmtpd: item.pmtpd,
-//   kcisEnsPvsNm: item.kcisEnsPvsNm,
-//   cpnyEnsPvsNm: item.cpnyEnsPvsNm,
-// }));
-
-// console.log(extractedData);
