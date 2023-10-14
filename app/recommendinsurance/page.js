@@ -53,7 +53,7 @@ export default function RecommendInsurance() {
           kcisEnsPvsNmString;
         resultString += s;
       }
-      console.log(resultString);
+      // console.log(resultString);
     })
     .catch((error) => {
       console.error("Error:", error);
