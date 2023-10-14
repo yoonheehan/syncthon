@@ -2,9 +2,25 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Checkbox, Label, TextInput } from "flowbite-react";
 
-export default function InputForm() {
-  const [ifsmoke, setIfSmoke] = useState("1");
+import { useRouter } from "next/navigation";
+
+export default function InputForm({}) {
+  const [ifSmoke, setIfSmoke] = useState(undefined);
+  const [age, setAge] = useState(10);
+  const [gender, setGender] = useState("남자");
+  const [howManySmoke, setHowManySmoke] = useState("1");
+  const [howMuchSmoke, setHowMuchSmoke] = useState("1");
+  const [diseases, setdiseases] = useState([]);
+  const [height, setHeight] = useState(150);
+  const [weight, setWeight] = useState(60);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    setIfSmoke("비흡연");
+  }, []);
 
   let ageArray = Array(90)
     .fill(0)
@@ -18,7 +34,7 @@ export default function InputForm() {
     "5개 이상": 5,
   };
 
-  let howMuchSmoke = {
+  let MuchObject = {
     "1년 미만": 0,
     "1년": 1,
     "2년": 2,
@@ -27,21 +43,69 @@ export default function InputForm() {
     "5년 이상": 5,
   };
 
-  const setSmoke = (event) => {
-    setIfSmoke(event.target.value);
-  };
+  function checkDiseases(disease) {
+    if (diseases.includes(disease)) {
+      let dIndex = diseases.indexOf(disease);
+      diseases.splice(dIndex, 1);
+    } else {
+      diseases.push(disease);
+    }
+  }
+
+  async function submitForm(e) {
+    e.preventDefault();
+    let cookieBody = {};
+    if (ifSmoke === "흡연") {
+      cookieBody = {
+        age: age,
+        gender: gender,
+        height: height,
+        weight: weight,
+        ifSmoke: ifSmoke,
+        howMuchSmoke: howMuchSmoke,
+        howManySmoke: howManySmoke,
+        diseases: diseases,
+      };
+    } else {
+      cookieBody = {
+        age: age,
+        gender: gender,
+        height: height,
+        weight: weight,
+        ifSmoke: ifSmoke,
+        diseases: diseases,
+      };
+    }
+
+    const respond = await fetch("/api/cookie", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cookieBody),
+    }).then((res) => res.json());
+    console.log(respond);
+    console.log(cookieBody);
+
+    if (respond.result === "success") {
+      router.push("/analyzing");
+    }
+  }
 
   return (
     <>
-      <form className="border border-solid px-5 py-10 rounded-2xl border-black min-w-[600px] bg-white">
+      <form
+        className="border border-solid px-5 py-10 rounded-2xl border-black min-w-[600px] bg-white"
+        onSubmit={(e) => submitForm(e)}
+      >
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              인적사항 기입
+              건강상태 기입
             </h2>
 
             <div className="mt-5 ">
-              <div className="mb-3">나이와 성별을 입력해주세요.</div>
+              <div className="mb-3">신체정보를 입력해주세요.</div>
               <div className="flex items-start w-full space-x-[60px]">
                 <div>
                   <label
@@ -53,6 +117,8 @@ export default function InputForm() {
                   <select
                     id="age"
                     className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block focus:outline-none p-2.5 min-w-[100px]"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
                   >
                     {ageArray.map((el) => (
                       <option key={el} value={el}>
@@ -73,14 +139,52 @@ export default function InputForm() {
                     <select
                       id="gender"
                       className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block p-2.5 min-w-[100px]"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
                     >
-                      <option key="men" value="0">
+                      <option key="men" value="남자">
                         남자
                       </option>
-                      <option key="women" value="1">
+                      <option key="women" value="여자">
                         여자
                       </option>
                     </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start w-full space-x-12 mt-5">
+                <div>
+                  <div className="mb-1 block">
+                    <Label htmlFor="height" value="키" />
+                  </div>
+                  <div className="flex items-end">
+                    <TextInput
+                      id="height"
+                      type="text"
+                      maxLength={3}
+                      value={height}
+                      className="w-[80px]"
+                      onChange={(e) => setHeight(e.target.value)}
+                    />
+                    <span className="ml-1.5 text-lg">cm</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="mb-1 block">
+                    <Label htmlFor="weight" value="몸무게" />
+                  </div>
+                  <div className="flex items-end">
+                    <TextInput
+                      id="weight"
+                      type="text"
+                      value={weight}
+                      maxLength={3}
+                      className="w-[80px]"
+                      onChange={(e) => setWeight(e.target.value)}
+                    />
+                    <span className="ml-1.5 text-lg">kg</span>
                   </div>
                 </div>
               </div>
@@ -92,11 +196,11 @@ export default function InputForm() {
                     <input
                       id="smoke"
                       type="radio"
-                      value="0"
+                      value="흡연"
                       name="ifsmoke"
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
-                      checked={ifsmoke == "0"}
-                      onChange={setSmoke}
+                      checked={ifSmoke == "흡연"}
+                      onChange={(e) => setIfSmoke(e.target.value)}
                     />
                     <label
                       htmlFor="smoke"
@@ -110,11 +214,11 @@ export default function InputForm() {
                     <input
                       id="no-smoke"
                       type="radio"
-                      value="1"
+                      value="비흡연"
                       name="ifsmoke"
-                      checked={ifsmoke == "1"}
+                      checked={ifSmoke == "비흡연"}
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0"
-                      onChange={setSmoke}
+                      onChange={(e) => setIfSmoke(e.target.value)}
                     />
                     <label
                       htmlFor="no-smoke"
@@ -126,7 +230,7 @@ export default function InputForm() {
                 </div>
               </div>
 
-              {ifsmoke === "0" && (
+              {ifSmoke === "흡연" && (
                 <div className="mt-5">
                   <div className="mb-3">흡연 기간 및 하루 당 개피</div>
                   <div className="flex space-x-5">
@@ -141,6 +245,8 @@ export default function InputForm() {
                         <select
                           id="many"
                           className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block p-2.5 min-w-[100px]"
+                          value={howManySmoke}
+                          onChange={(e) => setHowManySmoke(e.target.value)}
                         >
                           {Object.entries(manyObject).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -161,8 +267,10 @@ export default function InputForm() {
                         <select
                           id="long"
                           className="mt-1.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block p-2.5 min-w-[100px]"
+                          value={howMuchSmoke}
+                          onChange={(e) => setHowMuchSmoke(e.target.value)}
                         >
-                          {Object.entries(howMuchSmoke).map(([key, value]) => (
+                          {Object.entries(MuchObject).map(([key, value]) => (
                             <option key={key} value={value}>
                               {key}
                             </option>
@@ -173,39 +281,76 @@ export default function InputForm() {
                   </div>
                 </div>
               )}
+            </div>
 
-              <div className="mt-5">
-                <label
-                  htmlFor="first_name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  First name
-                </label>
-                <input
-                  type="text"
-                  id="first_name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-0 block w-full p-2.5"
-                  placeholder="John"
-                  required
+            <div className="mt-5 mb-2">가족력</div>
+
+            <div className="flex justify-between">
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="diabetes"
+                  value="당뇨"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
                 />
+                <Label className="flex" htmlFor="diabetes">
+                  <p>당뇨</p>
+                </Label>
               </div>
-
-              <div className="mt-10">
-                <label
-                  htmlFor="about"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  그 이외의 질환
-                </label>
-                <div className="mt-2">
-                  <textarea
-                    id="about"
-                    name="about"
-                    rows="3"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none placeholder:text-gray-400  sm:text-sm sm:leading-6 px-2"
-                    placeholder="자유롭게 작성해주세요"
-                  ></textarea>
-                </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="hypertension"
+                  value="고혈압"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="hypertension">
+                  <p>고혈압</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="cardiovascular"
+                  value="심장질환"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="cardiovascular">
+                  <p>심장질환</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="cancer"
+                  value="암"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="cancer">
+                  <p>암</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="Cerebral"
+                  value="뇌출혈"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="Cerebral">
+                  <p>뇌출혈</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="asthma"
+                  value="천식"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="asthma">
+                  <p>천식</p>
+                </Label>
               </div>
             </div>
           </div>

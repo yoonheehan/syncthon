@@ -1,23 +1,28 @@
 import InputForm from "./inputform";
+import { cookies } from "next/headers";
 
-export default function RecommendInsurance() {
-  const apiUrl = "https://4196413129.for-seoul.synctreengine.com/syncathon3";
-  const authToken = "jI12jJhnjJia6tikiLcomhnmhnmhnmhnmhnmaxamEzmz";
+export default async function RecommendInsurance() {
+  async function test() {
+    cookies.set("name", "name", (maxAge = 60 * 60));
+  }
+
+  const apiUrl = `${process.env.MY_SYNCTHONS}/kyobo`;
   let data;
   const requestOptions = {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   };
-  let a = fetch(apiUrl, requestOptions)
+
+  let insuranceSentence = await fetch(apiUrl, requestOptions)
     .then((response) => response.json())
     .then((responseData) => {
       data = responseData.result.response.body.goodList;
-
       // console.log(
       //   responseData.result.response.body.goodList_cnt[0]["goodList_cnt"]
       // );
+
       const groupedData = data.reduce((acc, item) => {
         const existingItem = acc.find(
           (group) => group.kcisGoodNm === item.kcisGoodNm
@@ -53,7 +58,7 @@ export default function RecommendInsurance() {
           kcisEnsPvsNmString;
         resultString += s;
       }
-      // console.log(resultString);
+      return resultString;
     })
     .catch((error) => {
       console.error("Error:", error);
