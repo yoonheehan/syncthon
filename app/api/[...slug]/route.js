@@ -26,10 +26,7 @@ export async function POST(request, { params }) {
     body: JSON.stringify(res),
   };
   console.log(requestOptions);
-  const resData = await fetch(apiUrl, requestOptions).then((res) => console.log(res));
-  // console.log("123");
-  console.log(resData);
-  // console.log("456");
-  // return new Response("Hello, Next.js!");
+  const resData = await fetch(apiUrl, requestOptions).then((res) => res.json());
+  console.log(resData)
   return Response.json(resData);
 }
