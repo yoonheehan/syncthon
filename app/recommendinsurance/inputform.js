@@ -76,20 +76,9 @@ export default function InputForm({}) {
         diseases: diseases,
       };
     }
+    localStorage.setItem("formData", JSON.stringify(cookieBody));
 
-    const respond = await fetch("/api/cookie", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(cookieBody),
-    }).then((res) => res.json());
-    console.log(respond);
-    console.log(cookieBody);
-
-    if (respond.result === "success") {
-      router.push("/analyzing");
-    }
+    router.push("/analyzing");
   }
 
   return (
