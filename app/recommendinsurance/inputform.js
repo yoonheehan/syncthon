@@ -11,7 +11,7 @@ export default function InputForm({}) {
   const [age, setAge] = useState(10);
   const [gender, setGender] = useState("남자");
   const [howManySmoke, setHowManySmoke] = useState("1");
-  const [howMuchSmoke, setHowMuchSmoke] = useState("1");
+  const [howMuchSmoke, setHowMuchSmoke] = useState("0");
   const [diseases, setdiseases] = useState([]);
   const [height, setHeight] = useState(150);
   const [weight, setWeight] = useState(60);
@@ -35,12 +35,12 @@ export default function InputForm({}) {
   };
 
   let MuchObject = {
-    "1년 미만": 0,
-    "1년": 1,
-    "2년": 2,
-    "3년": 3,
-    "4년": 4,
-    "5년 이상": 5,
+    "1년 미만": "0",
+    "1년": "1",
+    "2년": "2",
+    "3년": "3",
+    "4년": "4",
+    "5년 이상": "5",
   };
 
   function checkDiseases(disease) {
