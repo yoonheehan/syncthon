@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 const AnalyzingField = ({ insuranceSentence }) => {
   const router = useRouter();
+  const [resultAnswer, setResultAnswer] = useState(undefined)
 
   useEffect(() => {
     let item = localStorage.getItem("formData");
@@ -52,8 +53,10 @@ const AnalyzingField = ({ insuranceSentence }) => {
     // console.log(anotherSentence);
     let totalSentence = "";
     totalSentence += insuranceSentence + anotherSentence;
-    const getAnswer = async () =>
-      await fetch("api/gptapi", {
+    let result
+
+    async function getAnswer(){
+      let result = await fetch("api/gptapi", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,13 +64,34 @@ const AnalyzingField = ({ insuranceSentence }) => {
         body: JSON.stringify({
           prompt: totalSentence,
         }),
-      });
-    getAnswer();
+      }).then(res => res.json());
+      console.log('1232131')
+      console.log(result.result.choices[0].text)
+      const resultText = result.result.choices[0].text
+      setResultAnswer(resultText)
+      return result
+    }
+
+    // const getAnswer = async () =>
+    //   await fetch("api/gptapi", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       prompt: totalSentence,
+    //     }),
+    //   }).then(res => res.json());
+    console.log('33333')
+    console.log( getAnswer());
+
+    setResultAnswer(result)
   }, [router, insuranceSentence]);
 
   return (
     <>
       <div>Enterdddddddddddddddddd</div>
+      <div>{resultAnswer}</div>
     </>
   );
 };

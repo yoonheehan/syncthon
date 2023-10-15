@@ -27,8 +27,6 @@ export async function POST(request, { params }) {
   };
   console.log(requestOptions);
   const resData = await fetch(apiUrl, requestOptions).then((res) => res.json());
-  console.log("123");
-  console.log(resData);
-  console.log("456");
-  return new Response("Hello, Next.js!");
+  console.log(resData)
+  return Response.json(resData);
 }
