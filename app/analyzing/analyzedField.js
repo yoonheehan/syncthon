@@ -5,12 +5,10 @@ import { useEffect, useState } from "react";
 
 const AnalyzingField = ({ insuranceSentence }) => {
   const router = useRouter();
+
   useEffect(() => {
     let item = localStorage.getItem("formData");
-    console.log(item);
-    console.log(!item);
     if (item === null) {
-      console.log("123");
       router.push("/");
       return;
     }
@@ -51,15 +49,21 @@ const AnalyzingField = ({ insuranceSentence }) => {
         "다른 병은 없는 사람에게 추천할 만한 보험 3가지와 추천하는 이유";
     }
 
-    console.log(anotherSentence);
-  }, []);
-
-  //   const answer = await fetch("api/gpt", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
+    // console.log(anotherSentence);
+    let totalSentence = "";
+    totalSentence += insuranceSentence + anotherSentence;
+    const getAnswer = async () =>
+      await fetch("api/gptapi", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: totalSentence,
+        }),
+      });
+    getAnswer();
+  }, [router, insuranceSentence]);
 
   return (
     <>
