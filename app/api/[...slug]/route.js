@@ -16,7 +16,7 @@ export async function POST(request, { params }) {
   const res = await request.json();
   console.log(res);
   console.log(params);
-  const apiUrl = `${process.env.MY_SYNCTHONS}/${params.slug[0]}`;
+  const apiUrl = `${process.env.SILVER_SYNCTHONS}/${params.slug[0]}`;
   console.log(apiUrl);
   const requestOptions = {
     method: "POST",
@@ -26,9 +26,10 @@ export async function POST(request, { params }) {
     body: JSON.stringify(res),
   };
   console.log(requestOptions);
-  const resData = await fetch(apiUrl, requestOptions).then((res) => res.json());
-  console.log("123");
+  const resData = await fetch(apiUrl, requestOptions).then((res) => console.log(res));
+  // console.log("123");
   console.log(resData);
-  console.log("456");
-  return new Response("Hello, Next.js!");
+  // console.log("456");
+  // return new Response("Hello, Next.js!");
+  return Response.json(resData);
 }

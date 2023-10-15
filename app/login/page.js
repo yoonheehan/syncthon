@@ -9,7 +9,7 @@ const Login = () => {
     event.preventDefault();
     console.log(id);
     console.log(pw);
-    const a = await fetch("/api/kyobo", {
+    const a = await fetch("/api/kkyobo", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
