@@ -89,7 +89,7 @@ export default function InputForm({}) {
   return (
     <>
       <form
-        className="border border-solid px-5 py-10 rounded-2xl border-black min-w-[600px] bg-white"
+        className="border border-solid px-5 py-10 rounded-2xl border-black w-full sm:max-w-[640px] bg-white "
         onSubmit={(e) => submitForm(e)}
       >
         <div className="space-y-12">
@@ -278,8 +278,77 @@ export default function InputForm({}) {
             </div>
 
             <div className="mt-5 mb-2">가족력</div>
-
-            <div className="flex justify-between">
+            {/* PC용 보여주기 */}
+            <div className="flex justify-between hidden sm:block">
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="diabetes"
+                  value="당뇨"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="diabetes">
+                  <p>당뇨</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="hypertension"
+                  value="고혈압"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="hypertension">
+                  <p>고혈압</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="cardiovascular"
+                  value="심장질환"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="cardiovascular">
+                  <p>심장질환</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="cancer"
+                  value="암"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="cancer">
+                  <p>암</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="Cerebral"
+                  value="뇌출혈"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="Cerebral">
+                  <p>뇌출혈</p>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <Checkbox
+                  id="asthma"
+                  value="천식"
+                  name="disease"
+                  onChange={(e) => checkDiseases(e.target.value)}
+                />
+                <Label className="flex" htmlFor="asthma">
+                  <p>천식</p>
+                </Label>
+              </div>
+            </div>
+            {/* 모바일용 보여주기 */}
+            <div className="flex justify-between sm:hidden block">
               <div className="flex items-center space-x-1.5">
                 <Checkbox
                   id="diabetes"

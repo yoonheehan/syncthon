@@ -3,56 +3,40 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="py-20">
-      <div className="max-w-2xl mx-auto">
-        <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-          <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-            Announcing our next round of funding.{" "}
-            <a href="#" className="font-semibold text-indigo-600">
-              <span className="absolute inset-0" aria-hidden="true"></span>
-              Read more <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
+    <div className="relative flex flex-col xl:flex-row">
+      <div className="absolute top-[50%] -translate-y-1/2 left-[50%] xl:top-[20%] xl:left-[50%] -translate-x-1/2 flex flex-col sm:flex-row">
+        <div>
+          <span className="text-8xl font-bold">여</span>{" "}
+          <span className="text-2xl">행과</span>{" "}
         </div>
+        <div>
+          <span className="text-8xl font-bold">보</span>{" "}
+          <span className="text-2xl ">험</span>
+        </div>
+      </div>
+
+      <div className="absolute top-[70%] lg:left-[25%] flex flex-col lg:flex-row lg:justify-between w-full lg:w-[50%]">
         <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Data to enrich your online business
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-            fugiat aliqua.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link
-              href="/recommendinsurance"
-              className="rounded-md bg-indigo-600 px-12 py-4 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              시작하기
-            </Link>
-          </div>
+          <button className="w-[220px] h-[56px] bg-indigo-600 rounded-md  text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <Link href="/recommendinsurance">보험 추천 받기</Link>
+          </button>
+        </div>
+
+        <div className="text-center mt-10 xl:mt-0">
+          <button className="w-[220px] h-[56px] bg-indigo-600 rounded-md  text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <Link href="/settripplan">여행 계획 세우기</Link>
+          </button>
         </div>
       </div>
-      <div className="flex justify-center mx-auto w-full">
-        <Image
-          src="/image/kookminbank.png"
-          width={400}
-          height={300}
-          alt="kookminbank"
-        />
-        <Image
-          src="/image/kyobolife.png"
-          width={300}
-          height={300}
-          alt="kyobolife"
-        />
-        <Image
-          src="/image/synctree.png"
-          width={300}
-          height={300}
-          alt="synctree"
-        />
-      </div>
+
+      <img
+        src="/image/insurance.jpg"
+        className="w-screen h-[50vh] xl:h-screen xl:w-[50%]"
+      />
+      <img
+        src="/image/trip.jpg"
+        className="w-screen h-[50vh] xl:h-screen xl:w-[50%]"
+      />
     </div>
   );
 }
