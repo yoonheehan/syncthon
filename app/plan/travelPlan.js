@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {  Button } from "flowbite-react";
+import Link from "next/link";
 
 const TravelPlan = () => {
   const router = useRouter();
@@ -14,7 +16,7 @@ const TravelPlan = () => {
       router.push("/");
       return;
     }
-    console.log("eseses");
+ 
 
     let totalSentence = `당신은 여행 플래너야.통장 잔액 ${balance}원으로 여행 계획을 1500자로 써줘. 돈이 100만원 이상이면 해외로, 100만원 이하면 국내로 추천해줘`;
     const getAnswer = async () => {
@@ -28,7 +30,7 @@ const TravelPlan = () => {
         }),
       }).then((res) => res.json());
 
-      console.log("eseses" + a.result.choices[0].text);
+
       const resultText = a.result.choices[0].text;
       setResultAnswer(resultText.split("\n\n"));
       setIsLoading(false);
@@ -56,6 +58,9 @@ const TravelPlan = () => {
                   </div>
                 )
             )}
+            <Link href="/">
+            <Button>처음으로 돌아가기</Button>
+            </Link>
           </div>
         )}
       </div>
