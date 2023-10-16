@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {  Button } from "flowbite-react";
+import Link from "next/link";
 
 const AnalyzingField = ({ insuranceSentence }) => {
   const router = useRouter();
@@ -103,7 +105,12 @@ const AnalyzingField = ({ insuranceSentence }) => {
             <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">
               {thirdAnswer}
             </div>
+            <Link href="/">
+            <Button>처음으로 돌아가기</Button>
+            </Link>
+            
           </div>
+         
         )}
       </div>
     </>
