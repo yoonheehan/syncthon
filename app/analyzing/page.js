@@ -42,7 +42,7 @@ const Analyzing = async () => {
       // console.log(groupedData[0]);
       let resultString = "";
       // let insuranceData = groupedData;
-      for (let i = 0; i < groupedData.length; i++) {
+      for (let i = 0; i < 12; i++) {
         let insuranceArray = groupedData[i];
         let kcisList = insuranceArray.kcisEnsPvsNm;
         let kcisEnsPvsNmString = JSON.stringify(kcisList).replace(/"/g, "'");
@@ -60,9 +60,15 @@ const Analyzing = async () => {
     });
 
   return (
-    <div>
+
+
+    
+  
+
+    <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
       <AnalyzingField insuranceSentence={insuranceSentence} />
     </div>
+
   );
 };
 

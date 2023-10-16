@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 
 const AnalyzingField = ({ insuranceSentence }) => {
   const router = useRouter();
-  const [resultAnswer, setResultAnswer] = useState(undefined)
+  const [firstAnswer, setFirstAnswer] = useState(undefined)
+  const [secondAnswer, setSecondAnswer] = useState(undefined)
+  const [thirdAnswer, setThirdAnswer] = useState(undefined)
 
   useEffect(() => {
     let item = localStorage.getItem("formData");
@@ -44,16 +46,14 @@ const AnalyzingField = ({ insuranceSentence }) => {
       itemObject.diseases.forEach((d) => (anotherSentence += `${d}, `));
       anotherSentence = anotherSentence.slice(0, -2);
       anotherSentence +=
-        "를 가지고 있는 사람에게 추천할 만한 보험 3가지와 추천하는 이유";
+        "를 가지고 있는 사람에게 추천할 만한 보험 3가지와 추천하는 이유를 n번째로 900자내로 써줘";
     } else {
       anotherSentence +=
-        "다른 병은 없는 사람에게 추천할 만한 보험 3가지와 추천하는 이유";
+        "다른 병은 없는 사람에게 추천할 만한 보험 3가지와 추천하는 이유를 n번째로 900자내로 써줘";
     }
 
-    // console.log(anotherSentence);
     let totalSentence = "";
     totalSentence += insuranceSentence + anotherSentence;
-    let result
 
     async function getAnswer(){
       let result = await fetch("api/gptapi", {
@@ -65,33 +65,32 @@ const AnalyzingField = ({ insuranceSentence }) => {
           prompt: totalSentence,
         }),
       }).then(res => res.json());
-      console.log('1232131')
-      console.log(result.result.choices[0].text)
       const resultText = result.result.choices[0].text
       setResultAnswer(resultText)
-      return result
+      let raw = resultText.split('1번째')
+      let raw2 = raw[1].split('2번째')
+      let raw3 = raw2[1].split('3번째')
+      const firstAnswer = '1번째' + raw2[0]
+      const secondAnswer = '2번째' + raw3[0]
+      const thirdAnswer = '3번째' + raw3[1]
+      
+      setFirstAnswer(firstAnswer)
+      setSecondAnswer(secondAnswer)
+      setThirdAnswer(thirdAnswer)
     }
 
-    // const getAnswer = async () =>
-    //   await fetch("api/gptapi", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       prompt: totalSentence,
-    //     }),
-    //   }).then(res => res.json());
-    console.log('33333')
-    console.log( getAnswer());
+   getAnswer()
 
-    setResultAnswer(result)
   }, [router, insuranceSentence]);
 
   return (
     <>
-      <div>Enterdddddddddddddddddd</div>
-      <div>{resultAnswer}</div>
+   
+
+        <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">{firstAnswer}</div>
+        <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">{secondAnswer}</div>
+        <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">{thirdAnswer}</div>
+    
     </>
   );
 };

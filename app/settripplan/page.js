@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {  Label, TextInput } from "flowbite-react";
 
 const SetTripPlan = () => {
   const router = useRouter();
@@ -23,12 +24,27 @@ const SetTripPlan = () => {
   };
 
   return (
-    <div>
-      <input
+    <div className="border border-solid px-5 py-10 rounded-2xl border-black w-full sm:max-w-[640px] bg-white ">
+      {/* <input
         type="text"
         value={accountNum}
         onChange={(e) => setAccountNum(e.target.value)}
-      />
+      /> */}
+      <div>
+        <div className="mb-2 block">
+          <Label
+            htmlFor="account"
+            value="계좌번호 입력"
+          />
+        </div>
+        <TextInput
+          id="account"
+          sizing="md"
+          type="text"
+          value={accountNum}
+        onChange={(e) => setAccountNum(e.target.value)}
+        />
+      </div>
 
       <button onClick={handlePlanButtonClick}>계획짜기</button>
 

@@ -17,15 +17,15 @@ export default function Home() {
 
       <div className="absolute top-[70%] lg:left-[25%] flex flex-col lg:flex-row lg:justify-between w-full lg:w-[50%]">
         <div className="text-center">
-          <button className="w-[220px] h-[56px] bg-indigo-600 rounded-md  text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            <Link href="/recommendinsurance">보험 추천 받기</Link>
-          </button>
+          
+            <Link href="/recommendinsurance"><button className="w-[220px] h-[56px] bg-indigo-600 rounded-md  text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">보험 추천 받기</button></Link>
+          
         </div>
 
         <div className="text-center mt-10 lg:mt-0">
-          <button className="w-[220px] h-[56px] bg-indigo-600 rounded-md  text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            <Link href="/settripplan">여행 계획 세우기</Link>
-          </button>
+          
+            <Link href="/settripplan"><button className="w-[220px] h-[56px] bg-indigo-600 rounded-md  text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">여행 계획 세우기</button></Link>
+          
         </div>
       </div>
 

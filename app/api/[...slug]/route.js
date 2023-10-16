@@ -14,10 +14,7 @@ export async function GET(request, { params }) {
 
 export async function POST(request, { params }) {
   const res = await request.json();
-  console.log(res);
-  console.log(params);
   const apiUrl = `${process.env.SILVER_SYNCTHONS}/${params.slug[0]}`;
-  console.log(apiUrl);
   const requestOptions = {
     method: "POST",
     headers: {
@@ -25,9 +22,7 @@ export async function POST(request, { params }) {
     },
     body: JSON.stringify(res),
   };
-  console.log(requestOptions);
   const resData = await fetch(apiUrl, requestOptions).then((res) => res.json());
-  console.log(resData)
 
   return Response.json(resData);
 }
