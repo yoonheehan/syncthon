@@ -65,7 +65,7 @@ const Analyzing = async () => {
     
   
 
-    <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
+    <div>
       <AnalyzingField insuranceSentence={insuranceSentence} />
     </div>
 

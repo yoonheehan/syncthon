@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 const TravelPlan = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const [resultAnswer, setResultAnswer] = useState([]);
 
   useEffect(() => {
@@ -30,13 +31,35 @@ const TravelPlan = () => {
       console.log("eseses" + a.result.choices[0].text);
       const resultText = a.result.choices[0].text;
       setResultAnswer(resultText.split("\n\n"));
+      setIsLoading(false);
     };
     getAnswer();
   }, []);
 
   return (
     <>
-      <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
+      <div>
+        {isLoading ? (
+          <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
+            <div className="w-32 h-32 border-t-4 border-white rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
+            {resultAnswer.map(
+              (answer, index) =>
+                index > 1 && (
+                  <div
+                    key={index}
+                    className="relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg"
+                  >
+                    <span>{answer}</span>
+                  </div>
+                )
+            )}
+          </div>
+        )}
+      </div>
+      {/* <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
         {resultAnswer.map(
           (answer, index) =>
             index > 1 && (
@@ -48,7 +71,7 @@ const TravelPlan = () => {
               </div>
             )
         )}
-      </div>
+      </div> */}
     </>
   );
 };

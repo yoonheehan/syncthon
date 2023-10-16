@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 
 const AnalyzingField = ({ insuranceSentence }) => {
   const router = useRouter();
-  const [firstAnswer, setFirstAnswer] = useState(undefined)
-  const [secondAnswer, setSecondAnswer] = useState(undefined)
-  const [thirdAnswer, setThirdAnswer] = useState(undefined)
+  const [firstAnswer, setFirstAnswer] = useState(undefined);
+  const [secondAnswer, setSecondAnswer] = useState(undefined);
+  const [thirdAnswer, setThirdAnswer] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let item = localStorage.getItem("formData");
@@ -55,7 +56,7 @@ const AnalyzingField = ({ insuranceSentence }) => {
     let totalSentence = "";
     totalSentence += insuranceSentence + anotherSentence;
 
-    async function getAnswer(){
+    async function getAnswer() {
       let result = await fetch("api/gptapi", {
         method: "POST",
         headers: {
@@ -64,33 +65,47 @@ const AnalyzingField = ({ insuranceSentence }) => {
         body: JSON.stringify({
           prompt: totalSentence,
         }),
-      }).then(res => res.json());
-      const resultText = result.result.choices[0].text
-      setResultAnswer(resultText)
-      let raw = resultText.split('1번째')
-      let raw2 = raw[1].split('2번째')
-      let raw3 = raw2[1].split('3번째')
-      const firstAnswer = '1번째' + raw2[0]
-      const secondAnswer = '2번째' + raw3[0]
-      const thirdAnswer = '3번째' + raw3[1]
-      
-      setFirstAnswer(firstAnswer)
-      setSecondAnswer(secondAnswer)
-      setThirdAnswer(thirdAnswer)
+      }).then((res) => res.json());
+      const resultText = result.result.choices[0].text;
+
+      let raw = resultText.split("1번째");
+      let raw2 = raw[1].split("2번째");
+      let raw3 = raw2[1].split("3번째");
+      const firstAnswer = "1번째" + raw2[0];
+      const secondAnswer = "2번째" + raw3[0];
+      const thirdAnswer = "3번째" + raw3[1];
+
+      setFirstAnswer(firstAnswer);
+      setSecondAnswer(secondAnswer);
+      setThirdAnswer(thirdAnswer);
+
+      setIsLoading(false);
     }
 
-   getAnswer()
-
+    getAnswer();
   }, [router, insuranceSentence]);
 
   return (
     <>
-   
-
-        <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">{firstAnswer}</div>
-        <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">{secondAnswer}</div>
-        <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">{thirdAnswer}</div>
-    
+      <div>
+        {isLoading ? (
+          <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
+            <div className="w-32 h-32 border-t-4 border-white rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
+            <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">
+              {firstAnswer}
+            </div>
+            <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">
+              {secondAnswer}
+            </div>
+            <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">
+              {thirdAnswer}
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 };
