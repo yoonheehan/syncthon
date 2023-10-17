@@ -67,19 +67,7 @@ const TravelPlan = () => {
           </div>
         )}
       </div>
-      {/* <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
-        {resultAnswer.map(
-          (answer, index) =>
-            index > 1 && (
-              <div
-                key={index}
-                className="relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg"
-              >
-                <span>{answer}</span>
-              </div>
-            )
-        )}
-      </div> */}
+      
     </>
   );
 };
