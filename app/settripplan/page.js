@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Label, TextInput, Button } from "flowbite-react";
+import { Label, TextInput, Button, Select } from "flowbite-react";
 import Link from "next/link";
 import trip from "../../public/image/tripform.jpg";
 
@@ -44,7 +44,7 @@ const SetTripPlan = () => {
           잔액 조회를 통해 가지고 있는 금액으로 ai로 최적의 여행계획을 받아봐요.
         </div>
         <div>
-          <div className="mb-2 block">
+          <div className="mb-1 block">
             <Label htmlFor="account" value="계좌번호 입력" />
           </div>
           <TextInput
@@ -57,16 +57,24 @@ const SetTripPlan = () => {
         </div>
         {/* 국내/해외 선택 드롭다운 */}
         <div className="mt-3">
-          <Label htmlFor="location" value="" />
-          <select id="location" onChange={(e) => setLocation(e.target.value)}>
+          <div className="mb-1 block">
+            <Label htmlFor="location" value="국내외 선택" />
+          </div>
+          <Select
+            id="location"
+            required
+            onChange={(e) => setLocation(e.target.value)}
+          >
             <option value="국내">국내</option>
             <option value="해외">해외</option>
-          </select>
+          </Select>
         </div>
 
         {/* 여행 기간 입력 */}
         <div className="mt-3">
-          <Label htmlFor="duration" value="여행 기간 (일)" />
+          <div className="mb-1">
+            <Label htmlFor="duration" value="여행 기간 (일)" />
+          </div>
           <TextInput
             id="duration"
             sizing="md"

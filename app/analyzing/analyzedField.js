@@ -2,15 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import {  Button } from "flowbite-react";
+import { Button } from "flowbite-react";
 import Link from "next/link";
 
 const AnalyzingField = ({ insuranceSentence }) => {
   const router = useRouter();
-  const [firstAnswer, setFirstAnswer] = useState(undefined);
-  const [secondAnswer, setSecondAnswer] = useState(undefined);
-  const [thirdAnswer, setThirdAnswer] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [resultAnswer, setResultAnswer] = useState([]);
 
   useEffect(() => {
     let item = localStorage.getItem("formData");
@@ -49,10 +47,10 @@ const AnalyzingField = ({ insuranceSentence }) => {
       itemObject.diseases.forEach((d) => (anotherSentence += `${d}, `));
       anotherSentence = anotherSentence.slice(0, -2);
       anotherSentence +=
-        "를 가지고 있는 사람에게 추천할 만한 보험 3가지와 추천하는 이유를 n번째로 900자내로 써줘";
+        "를 가지고 있는 사람에게 추천할 만한 보험 3가지와 추천하는 이유를 900자내로 써줘";
     } else {
       anotherSentence +=
-        "다른 병은 없는 사람에게 추천할 만한 보험 3가지와 추천하는 이유를 n번째로 900자내로 써줘";
+        "다른 병은 없는 사람에게 추천할 만한 보험 3가지와 추천하는 이유를 900자내로 써줘";
     }
 
     let totalSentence = "";
@@ -69,17 +67,7 @@ const AnalyzingField = ({ insuranceSentence }) => {
         }),
       }).then((res) => res.json());
       const resultText = result.result.choices[0].text;
-
-      let raw = resultText.split("1번째");
-      let raw2 = raw[1].split("2번째");
-      let raw3 = raw2[1].split("3번째");
-      const firstAnswer = "1번째" + raw2[0];
-      const secondAnswer = "2번째" + raw3[0];
-      const thirdAnswer = "3번째" + raw3[1];
-
-      setFirstAnswer(firstAnswer);
-      setSecondAnswer(secondAnswer);
-      setThirdAnswer(thirdAnswer);
+      setResultAnswer(resultText.split("\n\n"));
 
       setIsLoading(false);
     }
@@ -96,21 +84,21 @@ const AnalyzingField = ({ insuranceSentence }) => {
           </div>
         ) : (
           <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
-            <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">
-              {firstAnswer}
-            </div>
-            <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">
-              {secondAnswer}
-            </div>
-            <div className="whitespace-pre-line relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg">
-              {thirdAnswer}
-            </div>
+            {resultAnswer.map(
+              (answer, index) =>
+                index > 0 && (
+                  <div
+                    key={index}
+                    className="relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg"
+                  >
+                    <span>{answer}</span>
+                  </div>
+                )
+            )}
             <Link href="/">
-            <Button>처음으로 돌아가기</Button>
+              <Button>처음으로 돌아가기</Button>
             </Link>
-            
           </div>
-         
         )}
       </div>
     </>
