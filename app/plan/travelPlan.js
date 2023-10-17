@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import {  Button } from "flowbite-react";
+import { Button } from "flowbite-react";
 import Link from "next/link";
 
 const TravelPlan = () => {
@@ -12,13 +12,15 @@ const TravelPlan = () => {
 
   useEffect(() => {
     let balance = localStorage.getItem("balance");
-    if (balance === null) {
+    let location = localStorage.getItem("location");
+    let duration = localStorage.getItem("duration");
+    if (balance === null || location == null || duration == null) {
       router.push("/");
       return;
     }
- 
 
-    let totalSentence = `당신은 여행 플래너야.통장 잔액 ${balance}원으로 여행 계획을 1500자로 써줘. 돈이 100만원 이상이면 해외로, 100만원 이하면 국내로 추천해줘`;
+    let totalSentence = `당신은 돈과 날짜가 주어지면 ${location} 여행 계획을 세울꺼야. 통장 잔액 ${balance}원일 때 해당 돈을 사용해서 ${duration}일간의 ${location} 여행 계획을 1400자 내로 만들어줘. 글자수가 넘어가면 뒤의 내용은 100자내로 요약해서 알려줘. 여행 날짜는 현재 날짜를 시작으로 해줘. 목적지는 추천해줘. 잡담은 빼고 인근 맛집, 관광지와 경비를 같이 알려줘`;
+    console.log(totalSentence);
     const getAnswer = async () => {
       let a = await fetch("api/gptapi", {
         method: "POST",
@@ -29,7 +31,6 @@ const TravelPlan = () => {
           prompt: totalSentence,
         }),
       }).then((res) => res.json());
-
 
       const resultText = a.result.choices[0].text;
       setResultAnswer(resultText.split("\n\n"));
@@ -49,7 +50,7 @@ const TravelPlan = () => {
           <div className="p-4 space-y-4 bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex flex-col items-center justify-center">
             {resultAnswer.map(
               (answer, index) =>
-                index > 1 && (
+                index > 0 && (
                   <div
                     key={index}
                     className="relative bg-white text-gray-800 p-4 rounded-lg my-2 w-full inline-block max-w-2xl shadow-lg"
@@ -59,7 +60,7 @@ const TravelPlan = () => {
                 )
             )}
             <Link href="/">
-            <Button>처음으로 돌아가기</Button>
+              <Button>처음으로 돌아가기</Button>
             </Link>
           </div>
         )}
