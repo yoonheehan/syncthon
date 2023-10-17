@@ -1,5 +1,5 @@
 export async function GET(request, { params }) {
-  const apiUrl = `${process.env.MY_SYNCTHONS}/${params.slug[0]}`;
+  const apiUrl = `https://3726439538.for-seoul.synctreengine.com/${params.slug[0]}`;
   const requestOptions = {
     method: "GET",
     headers: {
@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
 
 export async function POST(request, { params }) {
   const res = await request.json();
-  const apiUrl = `${process.env.SILVER_SYNCTHONS}/${params.slug[0]}`;
+  const apiUrl = `https://4196413129.for-seoul.synctreengine.com/${params.slug[0]}`;
   const requestOptions = {
     method: "POST",
     headers: {

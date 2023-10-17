@@ -80,11 +80,6 @@ export default function InputForm({}) {
     router.push("/analyzing");
   }
 
-  async function submitBalance(e) {
-    e.preventDefault();
-    localStorage.setItem("balance", accountNum);
-    // router.push("/analyzing");
-  }
 
   return (
     <>

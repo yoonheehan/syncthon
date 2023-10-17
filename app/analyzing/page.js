@@ -1,7 +1,7 @@
 import AnalyzingField from "./analyzedField";
 
 const Analyzing = async () => {
-  const apiUrl = `${process.env.MY_SYNCTHONS}/kyobo`;
+  const apiUrl = `https://3726439538.for-seoul.synctreengine.com/kyobo`;
   let data;
   const requestOptions = {
     method: "GET",
