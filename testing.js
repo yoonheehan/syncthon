@@ -13,9 +13,7 @@ fetch(apiUrl, requestOptions)
   .then((response) => response.json())
   .then((responseData) => {
     data = responseData.result.response.body.goodList;
-    console.log(
-      responseData.result.response.body.goodList_cnt[0]["goodList_cnt"]
-    );
+
     const groupedData = data.reduce((acc, item) => {
       const existingItem = acc.find(
         (group) => group.kcisGoodNm === item.kcisGoodNm
@@ -35,8 +33,6 @@ fetch(apiUrl, requestOptions)
       }
       return acc;
     }, []);
-    // console.log(groupedData);
-    console.log(groupedData[0]);
     let resultString;
     // let insuranceData = groupedData;
     for (let i = 0; i < groupedData.length; i++) {
@@ -50,7 +46,6 @@ fetch(apiUrl, requestOptions)
         kcisEnsPvsNmString;
       resultString += s;
     }
-    console.log(resultString);
   })
   .catch((error) => {
     console.error("Error:", error);

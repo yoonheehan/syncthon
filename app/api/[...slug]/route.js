@@ -1,6 +1,5 @@
 export async function GET(request, { params }) {
   const apiUrl = `${process.env.MY_SYNCTHONS}/${params.slug[0]}`;
-  console.log(`${process.env.MY_SYNCTHONS}/${params.slug[0]}`);
   const requestOptions = {
     method: "GET",
     headers: {

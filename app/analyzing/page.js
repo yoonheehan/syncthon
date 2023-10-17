@@ -14,10 +14,7 @@ const Analyzing = async () => {
     .then((response) => response.json())
     .then((responseData) => {
       data = responseData.result.response.body.goodList;
-      // console.log(
-      //   responseData.result.response.body.goodList_cnt[0]["goodList_cnt"]
-      // );
-
+ 
       const groupedData = data.reduce((acc, item) => {
         const existingItem = acc.find(
           (group) => group.kcisGoodNm === item.kcisGoodNm
@@ -39,9 +36,7 @@ const Analyzing = async () => {
         }
         return acc;
       }, []);
-      // console.log(groupedData[0]);
       let resultString = "";
-      // let insuranceData = groupedData;
       for (let i = 0; i < groupedData.length; i++) {
         let insuranceArray = groupedData[i];
         let kcisList = insuranceArray.kcisEnsPvsNm;

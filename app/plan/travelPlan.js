@@ -20,7 +20,6 @@ const TravelPlan = () => {
     }
 
     let totalSentence = `당신은 돈과 날짜가 주어지면 ${location} 여행 계획을 세울꺼야. 통장 잔액 ${balance}원일 때 해당 돈을 사용해서 ${duration}일간의 ${location} 여행 계획을 1400자 내로 만들어줘. 글자수가 넘어가면 뒤의 내용은 100자내로 요약해서 알려줘. 여행 날짜는 현재 날짜를 시작으로 해줘. 목적지는 추천해줘. 잡담은 빼고 인근 맛집, 관광지와 경비를 같이 알려줘`;
-    console.log(totalSentence);
     const getAnswer = async () => {
       let a = await fetch("api/gptapi", {
         method: "POST",
